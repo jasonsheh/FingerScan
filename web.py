@@ -11,8 +11,6 @@ from flask import Flask, render_template, request, redirect, flash
 app = Flask(__name__)
 app.secret_key = "super secret key"
 
-# max_fingerprint = Rules().count('application')
-
 
 @app.route('/')
 @app.route('/index')
@@ -24,7 +22,7 @@ def index():
 @app.route('/search', methods=['POST'])
 def add_task():
     if request.method == 'POST':
-        if request.form.get('finger'):
+        if request.form.get('finger').find('.') != -1:
             result = FingerPrint(request.form.get('finger')).run()
             flash(result.split(' ')[:-1])
         return redirect('/index')

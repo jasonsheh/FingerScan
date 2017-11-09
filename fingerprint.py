@@ -31,7 +31,7 @@ class FingerPrint:
         try:
             r = requests.get('http://' + self.target, timeout=3, headers=self.headers)
             for item in self.rules:
-                app = item[1]
+                appname = item[1]
                 rules = item[2].split(', ')
                 # print(app, rule)
                 for rule in rules:
@@ -40,29 +40,29 @@ class FingerPrint:
                     _rule = rule[1]
                     if place in ['body']:
                         if -1 != r.text.find(_rule):
-                            finger_print += app+' '
+                            finger_print += appname+' '
                             break
                     elif place in ['title']:
                         if re.search('<title>.*?'+_rule+'.*?</title>', r.text):
-                            finger_print += app+' '
+                            finger_print += appname+' '
                             break
                     elif place in ['header', 'server']:
                         header = ''
                         for key, value in r.headers.items():
                             header += key + ': ' + value + ' '
                         if re.search(re.escape(_rule), header, re.I):
-                            finger_print += app+' '
+                            finger_print += appname+' '
                             break
                     '''
                     elif place in ['fullheader', 'fullbody']:
                         if -1 != r.text.find(_rule):
-                            finger_print += app+' '
+                            finger_print += appname+' '
                             break
                         header = ''
                         for key, value in r.headers.items():
                             header += key + ': ' + value + ' '
                         if re.search(re.escape(_rule), header, re.I):
-                            finger_print += app+' '
+                            finger_print += appname+' '
                             break
                     '''
             self.result[self.target] = finger_print
@@ -81,4 +81,5 @@ class FingerPrint:
 
 
 if __name__ == '__main__':
-    result = FingerPrint(url='http://www.freebuf.com/').run()
+    result = FingerPrint(url='http://www.shanbay.com/').run()
+    print(result)

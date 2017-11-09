@@ -56,23 +56,24 @@
                     </span>
                 </form>
             </div><!-- /.col-lg-6 -->
-        </div><!-- /.row -->
 
-        <div class="col-md-2 col-md-offset-5">
-            <div class="row text-center">
-                <ul class="list-group">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                            {% for message in messages %}
-                                {% for finger in message %}
-                    <li class="list-group-item">{{ finger }}</li>
+            <div class="col-md-4 col-md-offset-4">
+                <div class="row text-center">
+                    <h4>识别指纹：</h4>
+                    <ul class="list-group">
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                                {% for message in messages %}
+                                    {% for finger in message %}
+                        <li class="list-group-item">{{ finger }}</li>
+                                    {% endfor %}
                                 {% endfor %}
-                            {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                </ul>
+                        {% endif %}
+                    {% endwith %}
+                    </ul>
+                </div>
             </div>
-        </div>
+        </div><!-- /.row -->
 
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="/static/js/jquery.min.js"></script>
