@@ -1,4 +1,8 @@
 # FingerScan
 
 ***
-一款可在线，可本地运行的网站服务识别工具，在线功能尚未完成，完成后将会部署在服务器上，敬请期待
+一款可在线，可本地运行的网站服务识别工具
+
+基本功能已完成，部署在[http://fingerprint.octfive.cn/](http://fingerprint.octfive.cn//)
+
+欢迎提出建议与意见
