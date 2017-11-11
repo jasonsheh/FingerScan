@@ -81,5 +81,6 @@ class FingerPrint:
 
 
 if __name__ == '__main__':
-    result = FingerPrint(url='http://www.shanbay.com/').run()
+    url = input('请输入待识别域名: ')
+    result = FingerPrint(url=url).run()
     print(result)
