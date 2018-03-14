@@ -11,7 +11,7 @@ class Rules:
         self.cursor = self.conn.cursor()
 
     def insert_application(self, app, rule):
-        sql = "insert into application (app, rule) " \
+        sql = "insert into application (name, rule) " \
               "values ('%s', '%s')"\
               % (app, rule)
         self.cursor.execute(sql)
@@ -27,7 +27,7 @@ class Rules:
         for result in results:
             _result = {}
             _result['id'] = result[0]
-            _result['app'] = result[1]
+            _result['name'] = result[1]
             _result['rule'] = result[2]
             _results.append(_result)
 

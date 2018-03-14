@@ -29,7 +29,7 @@ class FingerPrint:
         finger_print = ''
         self.init()
         try:
-            r = requests.get('http://' + self.target, timeout=3, headers=self.headers)
+            r = requests.get('http://' + self.target, timeout=2, headers=self.headers)
             for item in self.rules:
                 appname = item[1]
                 rules = item[2].split(', ')
@@ -43,7 +43,7 @@ class FingerPrint:
                             finger_print += appname+' '
                             break
                     elif place in ['title']:
-                        if re.search('<title>.*?'+_rule+'.*?</title>', r.text):
+                        if re.search('<title>.*?'+re.escape(_rule)+'.*?</title>', r.text):
                             finger_print += appname+' '
                             break
                     elif place in ['header', 'server']:
