@@ -5,8 +5,24 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
   padding-top: 50px;
+  color: #eee;
+  background-color: #333;
 }
 
+.btn {
+  color: #eee;
+  background-color: #333;
+}
+
+.form-control {
+  color: #eee;
+  background-color: #333;
+}
+
+.modal-content {
+  color: #eee;
+  background-color: #333;
+}
 
 /*
  * Global add-ons

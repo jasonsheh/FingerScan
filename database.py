@@ -10,17 +10,29 @@ class Rules:
         self.conn = sqlite3.connect('Rules.db')
         self.cursor = self.conn.cursor()
 
-    def insert_application(self, app, rule):
+    def add_rule(self, name, rule):
         sql = "insert into application (name, rule) " \
-              "values ('%s', '%s')"\
-              % (app, rule)
-        self.cursor.execute(sql)
+              "values (?, ?)"
+        self.cursor.execute(sql, (name, rule))
         self.conn.commit()
         self.clean()
 
-    def select_application(self, page):
-        sql = 'select * from application order by id desc limit %s,15' % ((page-1)*15)
-        self.cursor.execute(sql)
+    def search_rule(self, name):
+        sql = "select * from application where name like '%?%'"
+        self.cursor.execute(sql, (name, ))
+        results = self.cursor.fetchall()
+        _results = []
+        for result in results:
+            _result = {}
+            _result['id'] = result[0]
+            _result['name'] = result[1]
+            _result['rule'] = result[2]
+            _results.append(_result)
+        return _results
+
+    def select_rule(self, page):
+        sql = 'select * from application order by id desc limit ?,15'
+        self.cursor.execute(sql, ((page-1)*15, ))
         results = self.cursor.fetchall()
 
         _results = []
@@ -42,3 +54,8 @@ class Rules:
     def clean(self):
         self.cursor.close()
         self.conn.close()
+
+
+if __name__ == '__main__':
+    print(Rules().search_rule('asp'))
+    print(Rules().select_rule(2))

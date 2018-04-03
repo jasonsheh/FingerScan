@@ -19,13 +19,52 @@ def index():
     return render_template('index.html', total_number=total_number)
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/manage')
+def manage():
+    total_number = Rules().count()
+    return render_template('manage.html')
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        if request.form.get('username') and request.form.get('password'):
+            username = request.form.get('username')
+            password = request.form.get('password')
+
+            if username == 'admin' and password == 'password':
+                return redirect('/manage')
+            else:
+                return redirect('/index')
+
+
+@app.route('/fingerprint', methods=['POST'])
 def add_task():
     if request.method == 'POST':
         if request.form.get('finger').find('.') != -1:
             result = FingerPrint(request.form.get('finger')).run()
             flash(result.split(' ')[:-1])
         return redirect('/index')
+
+
+@app.route('/add', methods=['POST'])
+def add_rule():
+    if request.method == 'POST':
+        if request.form.get('name') and request.form.get('rule'):
+            name = request.form.get('name')
+            rule = request.form.get('rule')
+            Rules().add_rule(name, rule)
+        return redirect('/')
+
+
+@app.route('/search', methods=['POST'])
+def search_rule():
+    if request.method == 'POST':
+        if request.form.get('name'):
+            name = request.form.get('name')
+            results = Rules().search_rule(name)
+            print(results)
+            return render_template('manage.html', results=results)
 
 
 if __name__ == '__main__':
