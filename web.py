@@ -19,12 +19,6 @@ def index():
     return render_template('index.html', total_number=total_number)
 
 
-@app.route('/manage')
-def manage():
-    total_number = Rules().count()
-    return render_template('manage.html')
-
-
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
@@ -33,9 +27,8 @@ def login():
             password = request.form.get('password')
 
             if username == 'admin' and password == 'password':
-                return redirect('/manage')
-            else:
-                return redirect('/index')
+                return render_template('manage.html')
+        return redirect('/index')
 
 
 @app.route('/fingerprint', methods=['POST'])
@@ -54,7 +47,19 @@ def add_rule():
             name = request.form.get('name')
             rule = request.form.get('rule')
             Rules().add_rule(name, rule)
-        return redirect('/')
+        return render_template('manage.html')
+
+
+@app.route('/delete', methods=['POST'])
+def delete_rule():
+    if request.method == 'POST':
+        if request.form.get('name'):
+            name = request.form.get('name')
+            Rules().delete_rule(name=name)
+        if request.form.get('id'):
+            id = request.form.get('id')
+            Rules().delete_rule(id=id)
+        return render_template('manage.html')
 
 
 @app.route('/search', methods=['POST'])
@@ -63,7 +68,6 @@ def search_rule():
         if request.form.get('name'):
             name = request.form.get('name')
             results = Rules().search_rule(name)
-            print(results)
             return render_template('manage.html', results=results)
 
 

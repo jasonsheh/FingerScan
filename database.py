@@ -17,9 +17,19 @@ class Rules:
         self.conn.commit()
         self.clean()
 
+    def delete_rule(self, name='', id=''):
+        if id:
+            sql = "delete from application where id = ?"
+            self.cursor.execute(sql, (id,))
+        else:
+            sql = "delete from application where name = ?"
+            self.cursor.execute(sql, (name, ))
+        self.conn.commit()
+        self.clean()
+
     def search_rule(self, name):
-        sql = "select * from application where name like '%?%'"
-        self.cursor.execute(sql, (name, ))
+        sql = "select * from application where name like ?"
+        self.cursor.execute(sql, ('%'+name+'%', ))
         results = self.cursor.fetchall()
         _results = []
         for result in results:
@@ -57,5 +67,4 @@ class Rules:
 
 
 if __name__ == '__main__':
-    print(Rules().search_rule('asp'))
-    print(Rules().select_rule(2))
+    print(Rules().search_rule('nginx'))

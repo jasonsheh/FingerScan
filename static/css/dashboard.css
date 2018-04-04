@@ -19,6 +19,11 @@ body {
   background-color: #333;
 }
 
+.list-group-item {
+  color: #eee;
+  background-color: #333;
+}
+
 .modal-content {
   color: #eee;
   background-color: #333;

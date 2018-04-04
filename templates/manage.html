@@ -59,6 +59,24 @@
                 </div>
             </div><!-- /.col-lg-6 -->
 
+            <h3 class="text">删除指纹</h3>
+
+            <div class="">
+                <form class="form-inline" role="form" action="/delete" method=post>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="名称" name="name" value="">
+                        <input type="text" class="form-control" placeholder="编号" name="id" value="">
+                    </div><!-- /input-group -->
+                    <span class="form-group-btn">
+                        <button class="btn btn-default" type="submit">删除!</button>
+                    </span>
+
+                </form>
+                <div>
+                    选填name或id
+                </div>
+            </div><!-- /.col-lg-6 -->
+
             <h3 class="text">查询指纹</h3>
 
             <div class="">
@@ -71,11 +89,19 @@
                     </span>
                 </form>
                 <div>
-                    {% if results %}
+                    <table class="table">
+                        {% if results %}
+                        <tbody>
                         {% for result in results %}
-                            {{ result }}
+                            <tr>
+                                <td>{{ result.id }}</td>
+                                <td>{{ result.name }}</td>
+                                <td>{{ result.rule }}</td>
+                            </tr>
                         {% endfor %}
-                    {% endif %}
+                        </tbody>
+                        {% endif %}
+                    </table>
                 </div>
             </div><!-- /.col-lg-6 -->
         </div><!-- /.row -->
