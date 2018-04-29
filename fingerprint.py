@@ -8,10 +8,11 @@ import requests
 
 
 class FingerPrint:
-    def __init__(self, url):
+    def __init__(self, url, protocol):
         self.conn = sqlite3.connect('Rules.db')
         self.cursor = self.conn.cursor()
         self.target = url
+        self.protocol = protocol
         self.headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'}
         self.result = {}
         sql = 'select * from application'
@@ -29,7 +30,7 @@ class FingerPrint:
         finger_print = ''
         self.init()
         try:
-            r = requests.get('http://' + self.target, timeout=2, headers=self.headers)
+            r = requests.get(self.protocol+self.target, timeout=2, headers=self.headers)
             for item in self.rules:
                 appname = item[1]
                 rules = item[2].split(', ')
@@ -82,5 +83,5 @@ class FingerPrint:
 
 if __name__ == '__main__':
     url = input('请输入待识别域名: ')
-    result = FingerPrint(url=url).run()
+    result = FingerPrint(url=url, protocol='http://').run()
     print(result)

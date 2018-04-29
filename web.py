@@ -19,6 +19,11 @@ def index():
     return render_template('index.html', total_number=total_number)
 
 
+@app.route('/browser')
+def browser():
+    return render_template('browser.html')
+
+
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
@@ -35,7 +40,7 @@ def login():
 def add_task():
     if request.method == 'POST':
         if request.form.get('finger').find('.') != -1:
-            result = FingerPrint(request.form.get('finger')).run()
+            result = FingerPrint(request.form.get('finger'), request.form.get('protocol')).run()
             flash(result.split(' ')[:-1])
         return redirect('/index')
 

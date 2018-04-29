@@ -33,6 +33,7 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
+                        <li><a href="/browser">browser-finger</a></li>
 						<li><a href="/dashboard">Dashboard</a></li>
 						<li><a data-toggle="modal" data-target="#myModal">Manage</a></li>
 						<li><a href="https://github.com/jasonsheh/FingerScan">Help</a></li>
@@ -42,13 +43,25 @@
 		</nav>
         <div class="row text-center">
             <h3 class="text-center">目前已有<span class="label label-info">{{ total_number }}</span>个指纹</h3>
-
+            <script>
+                document.getElementById("protocol").value = document.getElementById("protocol_btn").value
+                function changeProtocol(){
+                    protocol = document.getElementById("protocol_btn").value
+                    if (protocol == "http://"){
+                        document.getElementById("protocol_btn").value = "https://"
+                        document.getElementById("protocol_btn").innerHTML = "https://"
+                    }else if (protocol == "https://"){
+                        document.getElementById("protocol_btn").value = "http://"
+                        document.getElementById("protocol_btn").innerHTML = "http://"
+                    }
+                    document.getElementById("protocol").value = document.getElementById("protocol_btn").value
+                }
+            </script>
             <div class="">
                 <form class="form-inline" role="form" action="/fingerprint" method=post>
-                    <span class="form-group-btn">
-                        <button class="btn btn-default" type="button">http://</button>
-                    </span>
                     <div class="form-group">
+                        <button class="btn btn-default" id="protocol_btn" type="button" value="http://" onclick="changeProtocol()">http://</button>
+                        <input type="hidden" id="protocol" name="protocol" value="http://">
                         <input type="text" class="form-control" placeholder="请输入域名" name="finger" value="">
                     </div><!-- /input-group -->
                     <span class="form-group-btn">
